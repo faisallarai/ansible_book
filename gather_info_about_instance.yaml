@@ -1,0 +1,15 @@
+---
+ - name: Fetching instances
+   hosts: localhost
+   connection: local
+   gather_facts: fals
+   tasks:
+   - name: Info
+     ec2_instance_facts:
+      region: eu-west-1
+      filters:
+       "tag:Env": test
+     register: ec2_info
+   - name: Displaying output
+     debug: msg="{{ ec2_info }}"
+     with_items: "{{ ec2_info.instances }}"
